@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+docs: https://www.htx.com/support/360000203002
+summary:
+  types: [apiKey]
+  api_key_in: [query]
+  oauth2_flows: []
+  notes: >-
+    HTX does not publish an OpenAPI document, so this profile is captured from the
+    developer documentation rather than derived from a spec. Authentication is a
+    per-request HMAC-SHA256 signature (Signature Version 2), not a bearer token or
+    OAuth.
+schemes:
+- name: htx-hmac-signature
+  type: apiKey
+  scheme: hmac-sha256
+  signature_version: '2'
+  in: query
+  parameters:
+    - AccessKeyId          # API key created in Profile > API Management
+    - SignatureMethod      # HmacSHA256
+    - SignatureVersion     # 2
+    - Timestamp            # UTC, format YYYY-MM-DDThh:mm:ss
+    - Signature            # Base64(HMAC-SHA256(secret, canonical request))
+  signing: >-
+    Signed string is: HTTP method (GET/POST) + '\n' + host + '\n' + path + '\n' +
+    ASCII-sorted, URL-encoded query parameters. The HMAC-SHA256 digest is signed
+    with the API secret key and Base64-encoded into the Signature parameter.
+  sources: [docs]
+  docs: https://huobiapi.github.io/docs/spot/v1/en/#signing-api-requests
+permissions:
+  model: per-key
+  scopes: [read-only, trade, withdraw]
+  notes: >-
+    API keys carry granular permissions selected at creation time (read-only,
+    trade). Withdrawal permission is disabled by default and IP allow-listing is
+    supported. This is a key-permission model, not an OAuth scope surface.
