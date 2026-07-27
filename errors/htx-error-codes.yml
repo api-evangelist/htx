@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+format: custom
+notes: >-
+  HTX returns a custom error envelope (not RFC 9457 problem+json). REST responses
+  carry a top-level "status" of "ok" or "error"; error responses include a string
+  "err-code" and a human-readable "err-msg". Each API section in the docs
+  publishes its own per-endpoint error-code table. The codes below are the
+  cross-cutting/system codes confirmed from the API reference; per-endpoint
+  business codes are documented alongside each operation.
+envelope:
+  status_field: status
+  code_field: err-code
+  message_field: err-msg
+  example: '{"status":"error","err-code":"api-signature-not-valid","err-msg":"Signature not valid"}'
+error_codes:
+- code: api-signature-not-valid
+  meaning: The HMAC-SHA256 request signature failed validation.
+  area: authentication
+- code: gateway-internal-error
+  meaning: Internal gateway error; the request could not be completed upstream.
+  area: system
+- code: too-many-requests
+  meaning: Request rate limit for the interface/IP/API key was exceeded.
+  area: rate-limiting
+- code: invalid-parameter
+  meaning: A request parameter is missing or malformed.
+  area: request
+- code: base-symbol-error
+  meaning: The trading symbol supplied is invalid or not tradable.
+  area: market

@@ -1,0 +1,81 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/HuobiRDCenter
+notes: >-
+  Official HTX (Huobi) client SDKs are published under the HuobiRDCenter GitHub
+  organization. Spot SDKs cover market data, trading and account management over
+  REST plus WebSocket subscription; separate *_contract / *_futures repos cover
+  the derivatives (contract) API. No first-party registry (npm/PyPI/Maven)
+  publication was confirmed for these SDKs; they are consumed directly from
+  GitHub source, so `registry: github` is recorded rather than a package index.
+packages:
+- language: java
+  registry: github
+  name: huobi_Java
+  url: https://github.com/HuobiRDCenter/huobi_Java
+  install: git clone https://github.com/HuobiRDCenter/huobi_Java
+  official: true
+  scope: spot
+- language: python
+  registry: github
+  name: huobi_Python
+  url: https://github.com/HuobiRDCenter/huobi_Python
+  install: git clone https://github.com/HuobiRDCenter/huobi_Python
+  official: true
+  scope: spot
+- language: go
+  registry: github
+  name: huobi_Golang
+  url: https://github.com/HuobiRDCenter/huobi_Golang
+  install: go get github.com/HuobiRDCenter/huobi_Golang
+  official: true
+  scope: spot
+- language: cpp
+  registry: github
+  name: huobi_Cpp
+  url: https://github.com/HuobiRDCenter/huobi_Cpp
+  install: git clone https://github.com/HuobiRDCenter/huobi_Cpp
+  official: true
+  scope: spot
+- language: csharp
+  registry: github
+  name: huobi_CSharp
+  url: https://github.com/HuobiRDCenter/huobi_CSharp
+  install: git clone https://github.com/HuobiRDCenter/huobi_CSharp
+  official: true
+  scope: spot
+- language: java
+  registry: github
+  name: huobi_java_contract
+  url: https://github.com/HuobiRDCenter/huobi_java_contract
+  install: git clone https://github.com/HuobiRDCenter/huobi_java_contract
+  official: true
+  scope: contract
+- language: python
+  registry: github
+  name: huobi_python_contract
+  url: https://github.com/HuobiRDCenter/huobi_python_contract
+  install: git clone https://github.com/HuobiRDCenter/huobi_python_contract
+  official: true
+  scope: contract
+- language: go
+  registry: github
+  name: huobi_futures_Golang
+  url: https://github.com/HuobiRDCenter/huobi_futures_Golang
+  install: go get github.com/HuobiRDCenter/huobi_futures_Golang
+  official: true
+  scope: contract
+- language: cpp
+  registry: github
+  name: huobi_cpp_contract
+  url: https://github.com/HuobiRDCenter/huobi_cpp_contract
+  install: git clone https://github.com/HuobiRDCenter/huobi_cpp_contract
+  official: true
+  scope: contract
+- language: csharp
+  registry: github
+  name: huobi_csharp_contract
+  url: https://github.com/HuobiRDCenter/huobi_csharp_contract
+  install: git clone https://github.com/HuobiRDCenter/huobi_csharp_contract
+  official: true
+  scope: contract

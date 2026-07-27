@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: probed
+source: live probes of api.huobi.pro, api-aws.huobi.pro, www.htx.com
+notes: >-
+  No /.well-known/ discovery documents are served. API hosts return 404 for every
+  probed path; www.htx.com returns 403 (edge/WAF block) with no served document.
+  Absence is recorded, expected data — no WellKnown pointer is wired in apis.yml.
+hosts:
+- host: https://api.huobi.pro
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://api-aws.huobi.pro
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://www.htx.com
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}

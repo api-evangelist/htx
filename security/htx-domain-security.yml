@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: htx.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  4 08:41:35 2026 GMT
+  hsts: false
+- host: www.htx.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 25 08:32:28 2026 GMT
+  hsts: false
+- host: api.huobi.pro
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 29 23:59:59 2027 GMT
+  hsts: null
+domains:
+- domain: htx.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: huobi.pro
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

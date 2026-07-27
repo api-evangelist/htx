@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+versioning:
+  scheme: uri-path
+  current: v2
+  active: [v1, v2]
+  docs: https://huobiapi.github.io/docs/spot/v1/en/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: >-
+    HTX announces endpoint changes, deprecations and rate-limit adjustments via
+    dated support announcements and the API reference change log rather than a
+    single formal deprecation-policy page or RFC 8594 Sunset/Deprecation headers.
+  announcements: https://www.htx.com/en-us/support/
+change_log: https://huobiapi.github.io/docs/spot/v1/en/#change-log
+status_page: null
+status_page_detail: >-
+  No dedicated developer/API status page (e.g. status.htx.com) was confirmed;
+  system-status is exposed programmatically via the Reference Data "system status"
+  endpoint of the API rather than a hosted status dashboard.
+sla:
+  url: null
+  detail: No public API uptime SLA was found for the retail exchange API.
+deprecated_operations: []

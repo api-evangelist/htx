@@ -1,0 +1,30 @@
+generated: '2026-07-19'
+method: derived
+source: https://huobiapi.github.io/docs/spot/v1/en/
+notes: >-
+  Cross-cutting standards posture derived from the HTX developer documentation
+  (no OpenAPI is published). Absence of a conformance claim is recorded as
+  conforms:false; this file does not assert a published compliance/certification
+  program (see security/ if one is later confirmed).
+standards:
+- id: oauth2
+  conforms: false
+  evidence: Authentication is per-request HMAC-SHA256 signing, not OAuth 2.0.
+- id: openid-connect
+  conforms: false
+  evidence: No OIDC discovery or ID tokens documented.
+- id: api-key-hmac
+  conforms: true
+  evidence: AccessKeyId + HMAC-SHA256 Signature Version 2 request signing.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom status/err-code/err-msg envelope, not application/problem+json.
+- id: websocket-streaming
+  conforms: true
+  evidence: Real-time market and account/order updates over WebSocket subscription topics.
+- id: rest
+  conforms: true
+  evidence: HTTP GET/POST REST interface over api.huobi.pro with JSON payloads.
+- id: pagination
+  conforms: true
+  evidence: List endpoints page by record id (from/direct) and time window (start-time/end-time).

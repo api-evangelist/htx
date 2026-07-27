@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+notes: >-
+  HTX documents rate limits per interface, applied per IP and/or per API key.
+  The figures below are the cross-cutting limits confirmed from the API reference
+  and support announcements; individual trading endpoints (e.g. place/cancel
+  order) publish their own tighter per-endpoint limits.
+scope: [per-ip, per-api-key, per-endpoint]
+signaling: >-
+  Exceeding a limit returns an error response (err-code too-many-requests). HTX
+  does not document standardized X-RateLimit-* response headers.
+rate_limits:
+- name: public-market-data-rest
+  scope: per-ip
+  limit_count: 800
+  window_seconds: 1
+  detail: Public RESTful market-data interfaces, up to 800 requests/second per IP.
+- name: public-non-market-rest
+  scope: per-ip
+  limit_count: 120
+  window_seconds: 3
+  detail: Public (non market-data) RESTful interfaces, up to 120 requests per 3 seconds per IP.

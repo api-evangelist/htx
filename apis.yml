@@ -1,9 +1,31 @@
 aid: htx
 name: HTX
-description: 'HTX is a company surfaced as a portfolio company of hongshan and added to the API Evangelist
-  network as a stub for enrichment. Sector: technology. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  HTX (formerly Huobi Global) is a cryptocurrency exchange founded in 2013 that
+  offers spot trading, futures and derivatives, margin trading, trading bots,
+  copy trading, and earn/staking products across BTC, ETH, XRP and 600+ digital
+  assets. HTX exposes a public developer platform (HTX Open Platform) with a REST
+  API and a WebSocket streaming API covering market data, account and wallet
+  management, sub-user administration, spot and conditional order placement, and
+  cross/isolated margin lending. Requests are authenticated with an AccessKey and
+  an HMAC-SHA256 (Signature Version 2) request signature. Official client SDKs are
+  published under the HuobiRDCenter GitHub organization for Java, Python, Go, C++
+  and C#, with separate contract/futures variants. HTX was surfaced as a portfolio
+  company of Hongshan (formerly Sequoia Capital China).
 url: https://raw.githubusercontent.com/api-evangelist/htx/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.htx.com/favicon.ico
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,11 +34,65 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Technology
-apis: []
+- Cryptocurrency
+- Crypto Exchange
+- Trading
+- Digital Assets
+- Blockchain
+- Financial Services
+- Market Data
+- WebSocket
+apis:
+- aid: htx:htx-spot-api
+  name: HTX Spot REST API
+  humanURL: https://www.htx.com/en-us/opend/newApiPages/
+  baseURL: https://api.huobi.pro
+  tags:
+  - Market Data
+  - Account
+  - Wallet
+  - Orders
+  - Trading
+  - Margin
+  - Sub-user
+  properties:
+  - url: https://www.htx.com/en-us/opend/newApiPages/
+    type: Documentation
+  - url: https://huobiapi.github.io/docs/spot/v1/en/
+    type: APIReference
+  description: >-
+    The HTX Spot REST API provides HTTP access to reference data (system status,
+    symbols, currencies, chains), market data (klines, tickers, depth, trades, 24h
+    summaries), account and balance information, wallet deposits/withdrawals,
+    sub-user management, spot and conditional order placement and querying, and
+    cross/isolated margin lending. Base hosts are api.huobi.pro and the
+    AWS-optimized api-aws.huobi.pro. Authentication uses AccessKeyId plus an
+    HMAC-SHA256 Signature Version 2 request signature.
+- aid: htx:htx-websocket-api
+  name: HTX WebSocket API
+  humanURL: https://www.htx.com/en-us/opend/newApiPages/
+  baseURL: https://api.huobi.pro
+  tags:
+  - WebSocket
+  - Market Data
+  - Streaming
+  - Account
+  - Orders
+  properties:
+  - url: https://www.htx.com/en-us/opend/newApiPages/
+    type: Documentation
+  - url: https://huobiapi.github.io/docs/spot/v1/en/
+    type: APIReference
+  description: >-
+    The HTX WebSocket API provides a two-way real-time channel for subscribing to
+    market data (klines, market depth, trade detail, best bid/offer) and to
+    authenticated account and order update topics. Public market data streams over
+    wss://api.huobi.pro/ws and authenticated account/order streams over
+    wss://api.huobi.pro/ws/v2, with heartbeat and rate-limit controls.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +101,46 @@ maintainers:
 common:
 - type: Website
   url: https://htx.com
+- type: DeveloperPortal
+  url: https://www.htx.com/en-us/opend/
+- type: Documentation
+  url: https://www.htx.com/en-us/opend/newApiPages/
+- type: APIReference
+  url: https://huobiapi.github.io/docs/spot/v1/en/
+- type: GettingStarted
+  url: https://www.htx.com/support/360000203002
+- type: GitHubOrganization
+  url: https://github.com/HuobiRDCenter
+- type: Support
+  url: https://www.htx.com/support/
+- type: TermsOfService
+  url: https://www.htx.com/support/360000298561/
+- type: PrivacyPolicy
+  url: https://www.htx.com/en-us/about/privacy/
+- type: SignUp
+  url: https://www.htx.com/en-us/register/
+- type: ChangeLog
+  url: changelog/htx-changelog.yml
+- type: Packages
+  url: packages/htx-packages.yml
+- type: SDKs
+  url: packages/htx-packages.yml
+- type: Authentication
+  url: authentication/htx-authentication.yml
+- type: Conventions
+  url: conventions/htx-conventions.yml
+- type: ErrorCatalog
+  url: errors/htx-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/htx-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/htx-rate-limits.yml
+- type: Conformance
+  url: conformance/htx-conformance.yml
+- type: DomainSecurity
+  url: security/htx-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

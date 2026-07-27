@@ -1,0 +1,59 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+summary: >-
+  Cross-cutting request/response semantics for the HTX Spot REST and WebSocket
+  APIs, captured from the developer documentation. HTX does not publish an OpenAPI
+  document; these conventions are documented, not derived from a spec.
+authentication:
+  style: api-key-hmac
+  detail: AccessKeyId + HMAC-SHA256 Signature Version 2 (see authentication/htx-authentication.yml)
+base_urls:
+  rest: [https://api.huobi.pro, https://api-aws.huobi.pro]
+  websocket_market: wss://api.huobi.pro/ws
+  websocket_account: wss://api.huobi.pro/ws/v2
+versioning:
+  style: uri-path
+  versions: [v1, v2]
+  detail: Endpoints are versioned in the path, e.g. /v1/order/orders and /v2/account/...
+error_envelope:
+  style: custom
+  detail: >-
+    REST responses carry a top-level "status" field ("ok" | "error"). Errors
+    include "err-code" (string, e.g. api-signature-not-valid) and "err-msg".
+    Not RFC 9457 problem+json. See errors/htx-error-codes.yml.
+  fields: [status, err-code, err-msg]
+pagination:
+  style: cursor-and-time
+  detail: >-
+    List endpoints page by record id (from/direct: prev|next) and/or by time
+    window (start-time/end-time) with a size limit; there is no single global
+    cursor convention across all resources.
+  params: [from, direct, size, start-time, end-time]
+idempotency:
+  supported: false
+  detail: >-
+    HTX does not document a general idempotency-key header for order placement.
+    Duplicate protection for new orders is offered via an optional
+    "client-order-id" that the caller supplies and can later query/cancel by,
+    but there is no documented Idempotency-Key contract.
+  client_order_id: client-order-id
+rate_limiting:
+  detail: >-
+    Rate limits are per API key / per IP and per endpoint; limits are documented
+    per interface. See rate-limits/htx-rate-limits.yml.
+  signaling: >-
+    Exceeding a limit returns an error response (e.g. err-code
+    too-many-requests); HTX does not document standardized X-RateLimit-* headers.
+timestamps:
+  format: UTC ISO-8601 (YYYY-MM-DDThh:mm:ss) for signing; epoch milliseconds in payloads
+streaming:
+  detail: >-
+    Real-time updates are delivered over WebSocket subscription topics (market
+    data on /ws, authenticated account/order updates on /ws/v2) with ping/pong
+    heartbeats. HTX does not use HTTP webhooks.
+cross_links:
+  authentication: authentication/htx-authentication.yml
+  errors: errors/htx-error-codes.yml
+  lifecycle: lifecycle/htx-lifecycle.yml
+  rate_limits: rate-limits/htx-rate-limits.yml

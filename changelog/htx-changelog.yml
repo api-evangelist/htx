@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://huobiapi.github.io/docs/spot/v1/en/
+docs: https://huobiapi.github.io/docs/spot/v1/en/#change-log
+announcements: https://www.htx.com/en-us/support/
+scheme: dated-changelog
+current_version: v2
+notes: >-
+  HTX maintains a dated change log inside the Spot API reference (entries from
+  2018 onward documenting new endpoints, parameter changes and feature
+  additions), supplemented by dated support announcements for rate-limit and
+  interface changes. Exact recent entry dates were not captured verbatim here;
+  the docs change log is the source of truth. The entries below are real,
+  recently-announced changes surfaced from HTX support without asserting a
+  specific publication date.
+entries:
+- version: null
+  date: null
+  type: change
+  highlights: HTX adjusts rate-limit policy for a subset of REST API endpoints.
+  url: https://www.htx.com/support/900001168066/
+- version: null
+  date: null
+  type: change
+  highlights: Adjustment in rate limits of select spot market-data interfaces.
+  url: https://www.htx.com/support/34899765028398
+- version: null
+  date: null
+  type: change
+  highlights: Rate limit removed for the "Cancel an Order" interface.
+  url: https://www.htx.com/support/24888369501704
