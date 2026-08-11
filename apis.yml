@@ -65,13 +65,11 @@ apis:
   - url: https://huobiapi.github.io/docs/spot/v1/en/
     type: APIReference
   description: >-
-    The HTX Spot REST API provides HTTP access to reference data (system status,
-    symbols, currencies, chains), market data (klines, tickers, depth, trades, 24h
-    summaries), account and balance information, wallet deposits/withdrawals,
-    sub-user management, spot and conditional order placement and querying, and
-    cross/isolated margin lending. Base hosts are api.huobi.pro and the
-    AWS-optimized api-aws.huobi.pro. Authentication uses AccessKeyId plus an
-    HMAC-SHA256 Signature Version 2 request signature.
+    The HTX Spot REST API provides HTTP access to reference data (system status, symbols, currencies,
+    chains), market data (klines, tickers, depth, trades, 24h summaries), account and balance information,
+    wallet deposits/withdrawals, sub-user management, spot and conditional order placement and querying,
+    and cross/isolated margin lending. Base hosts are api.huobi.pro and the AWS-optimized api-aws.huobi.pro.
+    Authentication uses AccessKeyId plus an HMAC-SHA256 Signature Version 2 request signature.
 - aid: htx:htx-websocket-api
   name: HTX WebSocket API
   humanURL: https://www.htx.com/en-us/opend/newApiPages/
@@ -88,11 +86,20 @@ apis:
   - url: https://huobiapi.github.io/docs/spot/v1/en/
     type: APIReference
   description: >-
-    The HTX WebSocket API provides a two-way real-time channel for subscribing to
-    market data (klines, market depth, trade detail, best bid/offer) and to
-    authenticated account and order update topics. Public market data streams over
-    wss://api.huobi.pro/ws and authenticated account/order streams over
+    The HTX WebSocket API provides a two-way real-time channel for subscribing to market data (klines,
+    market depth, trade detail, best bid/offer) and to authenticated account and order update topics.
+    Public market data streams over wss://api.huobi.pro/ws and authenticated account/order streams over
     wss://api.huobi.pro/ws/v2, with heartbeat and rate-limit controls.
+- aid: htx:htx-general-api
+  name: HTX General API
+  description: The General API from HTX — 92 operation(s) for general.
+  humanURL: https://www.htx.com/en-us/opend/newApiPages/
+  baseURL: https://api.huobi.pro
+  tags:
+  - General
+  properties:
+  - type: OpenAPI
+    url: openapi/htx-general-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -1,0 +1,1083 @@
+openapi: 3.2.0
+info:
+  title: HTX API
+  version: derived-2026-08-10
+  description: Derived from HTX's published documentation. Every operation in this document corresponds
+    to a literal HTTP method and path found in that documentation; nothing is inferred. Request and response
+    schemas are NOT described -- only the operations that are demonstrably documented.
+  x-provenance: derived-from-documentation
+  x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/
+  x-documentation-url: https://huobiapi.github.io/docs/spot/v1/en/
+  x-derived: '2026-08-10'
+  x-derivation-method: literal METHOD+path extraction from provider documentation; no pattern completion,
+    no inferred operations
+  x-not-a-provider-contract: This is API Evangelist's reading of the documentation, not a contract published
+    or endorsed by the provider.
+servers:
+- url: https://api.huobi.pro
+tags:
+- name: General
+paths:
+  /v2/sub-user/api-key-generation:
+    post:
+      summary: Create api key generation
+      tags:
+      - General
+      operationId: post_v2_sub_user_api_key_generation
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L817
+      x-source-context: <td><code>POST /v2/sub-user/api-key-generation</code></td>
+  /v1/dw/withdraw/api/create:
+    post:
+      summary: Create create
+      tags:
+      - General
+      operationId: post_v1_dw_withdraw_api_create
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L823
+      x-source-context: <td><code>POST /v1/dw/withdraw/api/create</code></td>
+  /v2/sub-user/api-key-modification:
+    post:
+      summary: Create api key modification
+      tags:
+      - General
+      operationId: post_v2_sub_user_api_key_modification
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L829
+      x-source-context: <td><code>POST /v2/sub-user/api-key-generation</code>,<br><code>POST /v2/sub-user/api-key-modification</code></td>
+  /v1/settings/common/market-symbols:
+    get:
+      summary: Retrieve market symbols
+      tags:
+      - General
+      operationId: get_v1_settings_common_market_symbols
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L835
+      x-source-context: <td><code>GET v1/common/symbols</code>,<br><code>GET /v1/settings/common/market-symbols</code></td>
+  /v2/settings/common/symbols:
+    get:
+      summary: Retrieve symbols
+      tags:
+      - General
+      operationId: get_v2_settings_common_symbols
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L847
+      x-source-context: <td><code>GET /v2/settings/common/symbols</code>,<br><code>GET /v1/settings/common/currencys</code></td>
+  /v1/settings/common/currencys:
+    get:
+      summary: Retrieve currencys
+      tags:
+      - General
+      operationId: get_v1_settings_common_currencys
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L847
+      x-source-context: <td><code>GET /v2/settings/common/symbols</code>,<br><code>GET /v1/settings/common/currencys</code></td>
+  /v1/settings/common/symbols:
+    get:
+      summary: Retrieve symbols
+      tags:
+      - General
+      operationId: get_v1_settings_common_symbols
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L853
+      x-source-context: <td><code>GET /v1/settings/common/symbols</code>,<br><code>GET /v1/settings/common/market-symbols</code></td>
+  /v1/settings/common/chains:
+    get:
+      summary: Retrieve chains
+      tags:
+      - General
+      operationId: get_v1_settings_common_chains
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L859
+      x-source-context: <td><code>GET /v1/settings/common/chains</code></td>
+  /v1/order/batch-orders:
+    post:
+      summary: Create batch orders
+      tags:
+      - General
+      operationId: post_v1_order_batch_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L865
+      x-source-context: <td><code>POST /v1/order/batch-orders</code>,<br><code>POST /v1/order/orders/place</code></td>
+  /v1/order/orders/place:
+    post:
+      summary: Create place
+      tags:
+      - General
+      operationId: post_v1_order_orders_place
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L865
+      x-source-context: <td><code>POST /v1/order/batch-orders</code>,<br><code>POST /v1/order/orders/place</code></td>
+  /v1/query/withdraw/client-order-id:
+    get:
+      summary: Retrieve client order id
+      tags:
+      - General
+      operationId: get_v1_query_withdraw_client_order_id
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L871
+      x-source-context: <td><code>GET /v1/query/withdraw/client-order-id</code></td>
+  /v1/account/accounts/{account-id}/balance:
+    get:
+      summary: Retrieve balance
+      tags:
+      - General
+      operationId: get_v1_account_accounts_account_id_balance
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L889
+      x-source-context: <td><code>GET /v1/account/accounts/{account-id}/balance</code></td>
+  /v1/account/history:
+    get:
+      summary: Retrieve history
+      tags:
+      - General
+      operationId: get_v1_account_history
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L907
+      x-source-context: <td><code>GET /v1/account/history</code></td>
+  /v1/order/orders/getClientOrder:
+    get:
+      summary: Retrieve getClientOrder
+      tags:
+      - General
+      operationId: get_v1_order_orders_getClientOrder
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L919
+      x-source-context: <td><code>GET /v1/order/orders/getClientOrder</code><br><code>POST /v1/order/orders/place</code><br><code>POST/v1/order/orders/submitCancelClientOrder</code></t
+  /v2/sub-user/deduct-mode:
+    post:
+      summary: Create deduct mode
+      tags:
+      - General
+      operationId: post_v2_sub_user_deduct_mode
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L931
+      x-source-context: <td><code>POST /v2/sub-user/deduct-mode</code></td>
+  /v2/sub-user/account-list:
+    get:
+      summary: Retrieve account list
+      tags:
+      - General
+      operationId: get_v2_sub_user_account_list
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L937
+      x-source-context: <td><code>GET /v2/sub-user/account-list</code></td>
+  /v2/account/repayment:
+    post:
+      summary: Create repayment
+      tags:
+      - General
+      operationId: post_v2_account_repayment
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L949
+      x-source-context: <td><code>POST /v2/account/repayment</code></td>
+    get:
+      summary: Retrieve repayment
+      tags:
+      - General
+      operationId: get_v2_account_repayment
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1003
+      x-source-context: <td><code>POST /v2/account/repayment</code>,<br><code>GET /v2/account/repayment</code></td>
+  /v1/order/matchresults:
+    get:
+      summary: Retrieve matchresults
+      tags:
+      - General
+      operationId: get_v1_order_matchresults
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L955
+      x-source-context: <td><code>GET /v1/order/matchresults</code></td>
+  /v2/etp/limit:
+    get:
+      summary: Retrieve limit
+      tags:
+      - General
+      operationId: get_v2_etp_limit
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L961
+      x-source-context: <td><code>GET /v2/etp/limit</code></td>
+  /v1/order/orders/{order-id}/matchresults:
+    get:
+      summary: Retrieve matchresults
+      tags:
+      - General
+      operationId: get_v1_order_orders_order_id_matchresults
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L979
+      x-source-context: <td><code>GET /v1/order/matchresults</code> and <code>GET /v1/order/orders/{order-id}/matchresults</code></td>
+  /v2/etp/{transactId}/cancel:
+    post:
+      summary: Create cancel
+      tags:
+      - General
+      operationId: post_v2_etp_transactId_cancel
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L985
+      x-source-context: <td><code>POST /v2/etp/{transactId}/cancel</code> and<code>POST /v2/etp/batch-cancel</code></td>
+      parameters:
+      - name: transactId
+        in: path
+        required: true
+        schema:
+          type: string
+  /v2/etp/batch-cancel:
+    post:
+      summary: Create batch cancel
+      tags:
+      - General
+      operationId: post_v2_etp_batch_cancel
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L985
+      x-source-context: <td><code>POST /v2/etp/{transactId}/cancel</code> and<code>POST /v2/etp/batch-cancel</code></td>
+  /v2/user/uid:
+    get:
+      summary: Retrieve uid
+      tags:
+      - General
+      operationId: get_v2_user_uid
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L991
+      x-source-context: <td><code>GET /v2/user/uid</code></td>
+  /v1/common/symbols:
+    get:
+      summary: Retrieve symbols
+      tags:
+      - General
+      operationId: get_v1_common_symbols
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1009
+      x-source-context: <td><code>GET /v1/common/symbols</code></td>
+  /market/etp:
+    get:
+      summary: Retrieve etp
+      tags:
+      - General
+      operationId: get_market_etp
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /market/history/kline:
+    get:
+      summary: Retrieve kline
+      tags:
+      - General
+      operationId: get_market_history_kline
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/reference:
+    get:
+      summary: Retrieve reference
+      tags:
+      - General
+      operationId: get_v2_etp_reference
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/creation:
+    post:
+      summary: Create creation
+      tags:
+      - General
+      operationId: post_v2_etp_creation
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/redemption:
+    post:
+      summary: Create redemption
+      tags:
+      - General
+      operationId: post_v2_etp_redemption
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/transactions:
+    get:
+      summary: Retrieve transactions
+      tags:
+      - General
+      operationId: get_v2_etp_transactions
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/transaction:
+    get:
+      summary: Retrieve transaction
+      tags:
+      - General
+      operationId: get_v2_etp_transaction
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/etp/rebalance:
+    get:
+      summary: Retrieve rebalance
+      tags:
+      - General
+      operationId: get_v2_etp_rebalance
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1021
+      x-source-context: <td><code>GET /v1/common/symbols</code>, <br><code>GET /market/etp</code>, <code>market.$symbol.etp</code>,
+        <br><code>GET /market/history/kline</code>, <br><cod
+  /v2/algo-orders:
+    post:
+      summary: Create algo orders
+      tags:
+      - General
+      operationId: post_v2_algo_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1039
+      x-source-context: <td><code>POST /v2/algo-orders</code>, <code>GET /v2/algo-orders/opening</code>,
+        <code>GET /v2/algo-orders/history</code>, <code>GET /v2/algo-orders/specific</c
+  /v2/algo-orders/opening:
+    get:
+      summary: Retrieve opening
+      tags:
+      - General
+      operationId: get_v2_algo_orders_opening
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1039
+      x-source-context: <td><code>POST /v2/algo-orders</code>, <code>GET /v2/algo-orders/opening</code>,
+        <code>GET /v2/algo-orders/history</code>, <code>GET /v2/algo-orders/specific</c
+  /v2/algo-orders/history:
+    get:
+      summary: Retrieve history
+      tags:
+      - General
+      operationId: get_v2_algo_orders_history
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1039
+      x-source-context: <td><code>POST /v2/algo-orders</code>, <code>GET /v2/algo-orders/opening</code>,
+        <code>GET /v2/algo-orders/history</code>, <code>GET /v2/algo-orders/specific</c
+  /v2/algo-orders/specific:
+    get:
+      summary: Retrieve specific
+      tags:
+      - General
+      operationId: get_v2_algo_orders_specific
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1039
+      x-source-context: <td><code>POST /v2/algo-orders</code>, <code>GET /v2/algo-orders/opening</code>,
+        <code>GET /v2/algo-orders/history</code>, <code>GET /v2/algo-orders/specific</c
+  /v2/account/asset-valuation:
+    get:
+      summary: Retrieve asset valuation
+      tags:
+      - General
+      operationId: get_v2_account_asset_valuation
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1051
+      x-source-context: <td><code>GET /v2/account/asset-valuation</code></td>
+  /v2/point/account:
+    get:
+      summary: Retrieve account
+      tags:
+      - General
+      operationId: get_v2_point_account
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1063
+      x-source-context: <td><code>GET /v2/point/account</code>， <code>POST /v2/point/transfer</code></td>
+  /v2/point/transfer:
+    post:
+      summary: Create transfer
+      tags:
+      - General
+      operationId: post_v2_point_transfer
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1063
+      x-source-context: <td><code>GET /v2/point/account</code>， <code>POST /v2/point/transfer</code></td>
+  /v2/market-status:
+    get:
+      summary: Retrieve market status
+      tags:
+      - General
+      operationId: get_v2_market_status
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1081
+      x-source-context: <td><code>GET /v2/market-status</code></td>
+  /v2/account/withdraw/address:
+    get:
+      summary: Retrieve address
+      tags:
+      - General
+      operationId: get_v2_account_withdraw_address
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1105
+      x-source-context: <td><code>GET /v2/account/withdraw/address</code></td>
+  /v2/sub-user/user-list:
+    get:
+      summary: Retrieve user list
+      tags:
+      - General
+      operationId: get_v2_sub_user_user_list
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1117
+      x-source-context: <td><code>GET /v2/sub-user/user-list</code>,<br> <code>GET /v2/sub-user/user-state</code>,<br>
+        <code>GET /v2/sub-user/account-list</code></td>
+  /v2/sub-user/user-state:
+    get:
+      summary: Retrieve user state
+      tags:
+      - General
+      operationId: get_v2_sub_user_user_state
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1117
+      x-source-context: <td><code>GET /v2/sub-user/user-list</code>,<br> <code>GET /v2/sub-user/user-state</code>,<br>
+        <code>GET /v2/sub-user/account-list</code></td>
+  /v1/account/transfer:
+    post:
+      summary: Create transfer
+      tags:
+      - General
+      operationId: post_v1_account_transfer
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1129
+      x-source-context: <td><code>POST /v1/account/transfer</code></td>
+  /v1/query/deposit-withdraw:
+    get:
+      summary: Retrieve deposit withdraw
+      tags:
+      - General
+      operationId: get_v1_query_deposit_withdraw
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1135
+      x-source-context: <td><code>GET /v1/query/deposit-withdraw</code></td>
+  /v2/user/api-key:
+    get:
+      summary: Retrieve api key
+      tags:
+      - General
+      operationId: get_v2_user_api_key
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1141
+      x-source-context: <td><code>POST /v2/sub-user/api-key-generation</code>,<br> <code>GET /v2/user/api-key</code>,<br>
+        <code>POST /v2/sub-user/api-key-modification</code>, <br><code
+  /v2/sub-user/api-key-deletion:
+    post:
+      summary: Create api key deletion
+      tags:
+      - General
+      operationId: post_v2_sub_user_api_key_deletion
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1141
+      x-source-context: <td><code>POST /v2/sub-user/api-key-generation</code>,<br> <code>GET /v2/user/api-key</code>,<br>
+        <code>POST /v2/sub-user/api-key-modification</code>, <br><code
+  /v2/reference/transact-fee-rate:
+    get:
+      summary: Retrieve transact fee rate
+      tags:
+      - General
+      operationId: get_v2_reference_transact_fee_rate
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1159
+      x-source-context: <td><code>GET /v2/reference/transact-fee-rate</code>,<br> <code>GET /v1/order/orders/{order-id}/matchresults</code>,
+        <br><code>GET /v1/order/matchresults</code>
+  /v2/sub-user/tradable-market:
+    post:
+      summary: Create tradable market
+      tags:
+      - General
+      operationId: post_v2_sub_user_tradable_market
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1165
+      x-source-context: <td><code>POST /v2/sub-user/tradable-market</code></td>
+  /v2/sub-user/transferability:
+    post:
+      summary: Create transferability
+      tags:
+      - General
+      operationId: post_v2_sub_user_transferability
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1171
+      x-source-context: <td><code>POST /v2/sub-user/transferability</code></td>
+  /v2/sub-user/creation:
+    post:
+      summary: Create creation
+      tags:
+      - General
+      operationId: post_v2_sub_user_creation
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1177
+      x-source-context: <td><code>POST /v2/sub-user/creation</code></td>
+  /v2/account/deposit/address:
+    get:
+      summary: Retrieve address
+      tags:
+      - General
+      operationId: get_v2_account_deposit_address
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1201
+      x-source-context: <td><code>GET /v2/account/deposit/address</code>, <code>GET /v2/sub-user/deposit-address</code>,
+        <code>GET /v1/query/deposit-withdraw</code>, <code>GET /v2/sub-
+  /v2/sub-user/deposit-address:
+    get:
+      summary: Retrieve deposit address
+      tags:
+      - General
+      operationId: get_v2_sub_user_deposit_address
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1201
+      x-source-context: <td><code>GET /v2/account/deposit/address</code>, <code>GET /v2/sub-user/deposit-address</code>,
+        <code>GET /v1/query/deposit-withdraw</code>, <code>GET /v2/sub-
+  /v2/sub-user/query-deposit:
+    get:
+      summary: Retrieve query deposit
+      tags:
+      - General
+      operationId: get_v2_sub_user_query_deposit
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1201
+      x-source-context: <td><code>GET /v2/account/deposit/address</code>, <code>GET /v2/sub-user/deposit-address</code>,
+        <code>GET /v1/query/deposit-withdraw</code>, <code>GET /v2/sub-
+  /v2/account/ledger:
+    get:
+      summary: Retrieve ledger
+      tags:
+      - General
+      operationId: get_v2_account_ledger
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1219
+      x-source-context: <td><code>GET /v2/account/ledger</code></td>
+  /v1/order/openOrders:
+    get:
+      summary: Retrieve openOrders
+      tags:
+      - General
+      operationId: get_v1_order_openOrders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1231
+      x-source-context: <td><code>POST /v1/order/orders/place</code>,<br><code>POST /v1/order/batch-orders</code>,<br><code>GET
+        /v1/order/openOrders</code>,<br><code>GET /v1/order/orde
+  /v1/order/orders/{order-id}:
+    get:
+      summary: Retrieve order id
+      tags:
+      - General
+      operationId: get_v1_order_orders_order_id
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1231
+      x-source-context: <td><code>POST /v1/order/orders/place</code>,<br><code>POST /v1/order/batch-orders</code>,<br><code>GET
+        /v1/order/openOrders</code>,<br><code>GET /v1/order/orde
+  /v1/order/orders:
+    get:
+      summary: Retrieve orders
+      tags:
+      - General
+      operationId: get_v1_order_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1231
+      x-source-context: <td><code>POST /v1/order/orders/place</code>,<br><code>POST /v1/order/batch-orders</code>,<br><code>GET
+        /v1/order/openOrders</code>,<br><code>GET /v1/order/orde
+  /v1/order/history:
+    get:
+      summary: Retrieve history
+      tags:
+      - General
+      operationId: get_v1_order_history
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1231
+      x-source-context: <td><code>POST /v1/order/orders/place</code>,<br><code>POST /v1/order/batch-orders</code>,<br><code>GET
+        /v1/order/openOrders</code>,<br><code>GET /v1/order/orde
+  /market/tickers:
+    get:
+      summary: Retrieve tickers
+      tags:
+      - General
+      operationId: get_market_tickers
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1255
+      x-source-context: <td><code>GET /market/tickers</code></td>
+  /v1/fee/fee-rate/get:
+    get:
+      summary: Retrieve get
+      tags:
+      - General
+      operationId: get_v1_fee_fee_rate_get
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1261
+      x-source-context: <td><code>GET /v1/fee/fee-rate/get</code></td>
+  /v1/cross-margin/loan-orders:
+    get:
+      summary: Retrieve loan orders
+      tags:
+      - General
+      operationId: get_v1_cross_margin_loan_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1273
+      x-source-context: <td><code>GET /v1/cross-margin/loan-orders</code>,<br><code>GET /v1/cross-margin/accounts/balance</code></td>
+  /v1/cross-margin/accounts/balance:
+    get:
+      summary: Retrieve balance
+      tags:
+      - General
+      operationId: get_v1_cross_margin_accounts_balance
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1273
+      x-source-context: <td><code>GET /v1/cross-margin/loan-orders</code>,<br><code>GET /v1/cross-margin/accounts/balance</code></td>
+  /v1/subuser/aggregate-balance:
+    get:
+      summary: Retrieve aggregate balance
+      tags:
+      - General
+      operationId: get_v1_subuser_aggregate_balance
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1279
+      x-source-context: <td><code>GET /v1/subuser/aggregate-balance</code>,<br><code>GET /v1/account/accounts/{sub-uid}</code></td>
+  /v1/account/accounts/{sub-uid}:
+    get:
+      summary: Retrieve sub uid
+      tags:
+      - General
+      operationId: get_v1_account_accounts_sub_uid
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1279
+      x-source-context: <td><code>GET /v1/subuser/aggregate-balance</code>,<br><code>GET /v1/account/accounts/{sub-uid}</code></td>
+  /v1/cross-margin/transfer-in:
+    post:
+      summary: Create transfer in
+      tags:
+      - General
+      operationId: post_v1_cross_margin_transfer_in
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1285
+      x-source-context: <td><code>POST /v1/cross-margin/transfer-in</code>,<br><code>POST /v1/cross-margin/transfer-out</code>,<br><code>GET
+        /v1/cross-margin/loan-info</code>,<br><code
+  /v1/cross-margin/transfer-out:
+    post:
+      summary: Create transfer out
+      tags:
+      - General
+      operationId: post_v1_cross_margin_transfer_out
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1285
+      x-source-context: <td><code>POST /v1/cross-margin/transfer-in</code>,<br><code>POST /v1/cross-margin/transfer-out</code>,<br><code>GET
+        /v1/cross-margin/loan-info</code>,<br><code
+  /v1/cross-margin/loan-info:
+    get:
+      summary: Retrieve loan info
+      tags:
+      - General
+      operationId: get_v1_cross_margin_loan_info
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1285
+      x-source-context: <td><code>POST /v1/cross-margin/transfer-in</code>,<br><code>POST /v1/cross-margin/transfer-out</code>,<br><code>GET
+        /v1/cross-margin/loan-info</code>,<br><code
+  /v1/cross-margin/orders:
+    post:
+      summary: Create orders
+      tags:
+      - General
+      operationId: post_v1_cross_margin_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1285
+      x-source-context: <td><code>POST /v1/cross-margin/transfer-in</code>,<br><code>POST /v1/cross-margin/transfer-out</code>,<br><code>GET
+        /v1/cross-margin/loan-info</code>,<br><code
+  /v1/cross-margin/orders/{order-id}/repay:
+    post:
+      summary: Create repay
+      tags:
+      - General
+      operationId: post_v1_cross_margin_orders_order_id_repay
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1285
+      x-source-context: <td><code>POST /v1/cross-margin/transfer-in</code>,<br><code>POST /v1/cross-margin/transfer-out</code>,<br><code>GET
+        /v1/cross-margin/loan-info</code>,<br><code
+  /v2/reference/currencies:
+    get:
+      summary: Retrieve currencies
+      tags:
+      - General
+      operationId: get_v2_reference_currencies
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1309
+      x-source-context: <td><code>GET /v2/reference/currencies</code></td>
+  /v1/margin/loan-info:
+    get:
+      summary: Retrieve loan info
+      tags:
+      - General
+      operationId: get_v1_margin_loan_info
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1315
+      x-source-context: <td><code>GET /v1/margin/loan-info</code></td>
+  /v2/sub-user/management:
+    post:
+      summary: Create management
+      tags:
+      - General
+      operationId: post_v2_sub_user_management
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1333
+      x-source-context: <td><code>POST /v2/sub-user/management</code></td>
+  /v1/order/orders/batchcancel:
+    post:
+      summary: Create batchcancel
+      tags:
+      - General
+      operationId: post_v1_order_orders_batchcancel
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1339
+      x-source-context: <td><code>POST /v1/order/orders/batchcancel</code></td>
+  /v1/order/orders/{order-id}/matchresult:
+    get:
+      summary: Retrieve matchresult
+      tags:
+      - General
+      operationId: get_v1_order_orders_order_id_matchresult
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1375
+      x-source-context: <td><code>GET /v1/order/orders/{order-id}/matchresult</code><br /><code>GET /v1/order/matchresults</code></td>
+  /market/trade:
+    get:
+      summary: Retrieve trade
+      tags:
+      - General
+      operationId: get_market_trade
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1399
+      x-source-context: <td><code>GET /market/trade</code><br /><code>GET /market/history/trade</code><br
+        /><code>market.$symbol.trade.detail</code></td>
+  /market/history/trade:
+    get:
+      summary: Retrieve trade
+      tags:
+      - General
+      operationId: get_market_history_trade
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1399
+      x-source-context: <td><code>GET /market/trade</code><br /><code>GET /market/history/trade</code><br
+        /><code>market.$symbol.trade.detail</code></td>
+  /v2/account/withdraw/quota:
+    get:
+      summary: Retrieve quota
+      tags:
+      - General
+      operationId: get_v2_account_withdraw_quota
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1405
+      x-source-context: <td><code>GET /v2/account/withdraw/quota</code></td>
+  /v1/order/orders/{order-id}/submitcancel:
+    post:
+      summary: Create submitcancel
+      tags:
+      - General
+      operationId: post_v1_order_orders_order_id_submitcancel
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1411
+      x-source-context: <td><code>POST /v1/order/orders/{order-id}/submitcancel</code><br /><code>POST
+        /v1/order/orders/batchcancel</code></td>
+  /v1/margin/loan-orders:
+    get:
+      summary: Retrieve loan orders
+      tags:
+      - General
+      operationId: get_v1_margin_loan_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1429
+      x-source-context: <td><code>GET /v1/subuser/aggregate-balance</code><br /><code>GET /v1/account/accounts/{sub-uid}</code><br
+        /><code>GET /v1/margin/loan-orders</code><br /><code>
+  /v1/margin/accounts/balance:
+    get:
+      summary: Retrieve balance
+      tags:
+      - General
+      operationId: get_v1_margin_accounts_balance
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1429
+      x-source-context: <td><code>GET /v1/subuser/aggregate-balance</code><br /><code>GET /v1/account/accounts/{sub-uid}</code><br
+        /><code>GET /v1/margin/loan-orders</code><br /><code>
+  /v1/order/orders/submitCancelClientOrder:
+    post:
+      summary: Create submitCancelClientOrder
+      tags:
+      - General
+      operationId: post_v1_order_orders_submitCancelClientOrder
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1453
+      x-source-context: <td>Order related API Except <code>POST /v1/order/orders/submitCancelClientOrder</code>
+        &amp; <code>GET /v1/order/openOrders</code></td>
+  /v1/order/orders/batchCancelOpenOrders:
+    post:
+      summary: Create batchCancelOpenOrders
+      tags:
+      - General
+      operationId: post_v1_order_orders_batchCancelOpenOrders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1471
+      x-source-context: <td><code>POST /v1/order/orders/batchCancelOpenOrders</code></td>
+  /v1/stable_coin/exchange_rate:
+    get:
+      summary: Retrieve exchange rate
+      tags:
+      - General
+      operationId: get_v1_stable_coin_exchange_rate
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1543
+      x-source-context: <td><code>GET /v1/stable_coin/exchange_rate</code><br /><code>POST /v1/stable_coin/exchange</code></td>
+  /v1/stable_coin/exchange:
+    post:
+      summary: Create exchange
+      tags:
+      - General
+      operationId: post_v1_stable_coin_exchange
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1543
+      x-source-context: <td><code>GET /v1/stable_coin/exchange_rate</code><br /><code>POST /v1/stable_coin/exchange</code></td>
+  /v1/futures/transfer:
+    post:
+      summary: Create transfer
+      tags:
+      - General
+      operationId: post_v1_futures_transfer
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1573
+      x-source-context: <td><code>POST /v1/futures/transfer</code></td>
+  /v1/account/accounts:
+    get:
+      summary: Retrieve accounts
+      tags:
+      - General
+      operationId: get_v1_account_accounts
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1972
+      x-source-context: <td><a href="#bd9157656f">GET /v1/account/accounts</a></td>
+  /v1/dw/transfer-in/margin:
+    post:
+      summary: Create margin
+      tags:
+      - General
+      operationId: post_v1_dw_transfer_in_margin
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1984
+      x-source-context: <td><a href="#0d3c2e7382">POST /v1/dw/transfer-in/margin</a></td>
+  /v1/dw/transfer-out/margin:
+    post:
+      summary: Create margin
+      tags:
+      - General
+      operationId: post_v1_dw_transfer_out_margin
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1988
+      x-source-context: <td><a href="#0d3c2e7382">POST /v1/dw/transfer-out/margin</a></td>
+  /v1/margin/orders:
+    post:
+      summary: Create orders
+      tags:
+      - General
+      operationId: post_v1_margin_orders
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1992
+      x-source-context: <td><a href="#48cca1ce88">POST /v1/margin/orders</a></td>
+  /v1/margin/orders/{order-id}/repay:
+    post:
+      summary: Create repay
+      tags:
+      - General
+      operationId: post_v1_margin_orders_order_id_repay
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L1996
+      x-source-context: <td><a href="#48aa7c8199">POST /v1/margin/orders/{order-id}/repay</a></td>
+  /v1/common/currencys:
+    get:
+      summary: Retrieve currencys
+      tags:
+      - General
+      operationId: get_v1_common_currencys
+      responses:
+        '200':
+          description: Successful response
+      x-source-documentation: https://huobiapi.github.io/docs/spot/v1/en/#L6926
+      x-source-context: <td>Refer to GET /v1/common/currencys</td>
