@@ -43,6 +43,17 @@ tags:
 - Trading
 - Digital Assets
 - Blockchain
+- Financial-Services
+- Market Data
+- WebSocket
+tags_raw:
+- Company
+- Technology
+- Cryptocurrency
+- Crypto Exchange
+- Trading
+- Digital Assets
+- Blockchain
 - Financial Services
 - Market Data
 - WebSocket
@@ -52,6 +63,14 @@ apis:
   humanURL: https://www.htx.com/en-us/opend/newApiPages/
   baseURL: https://api.huobi.pro
   tags:
+  - Market Data
+  - Account
+  - Wallets
+  - Order
+  - Trading
+  - Margin
+  - Sub-user
+  tags_raw:
   - Market Data
   - Account
   - Wallet
@@ -77,6 +96,12 @@ apis:
   humanURL: https://www.htx.com/en-us/opend/newApiPages/
   baseURL: https://api.huobi.pro
   tags:
+  - WebSocket
+  - Market Data
+  - Streaming
+  - Account
+  - Order
+  tags_raw:
   - WebSocket
   - Market Data
   - Streaming
