@@ -13,6 +13,17 @@ description: >-
   and C#, with separate contract/futures variants. HTX was surfaced as a portfolio
   company of Hongshan (formerly Sequoia Capital China).
 url: https://raw.githubusercontent.com/api-evangelist/htx/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
