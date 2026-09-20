@@ -1,0 +1,18 @@
+{
+  "provider": "htx",
+  "sources": [
+    "htx-derived-openapi.yml"
+  ],
+  "outputs": [
+    "htx-general-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/htx-derived-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "apis.yml register: written (+1 apis, 3 total)"
+  ],
+  "skipped": []
+}
