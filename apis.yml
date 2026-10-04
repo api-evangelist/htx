@@ -56,7 +56,7 @@ tags:
 - Trading
 - Digital Assets
 - Blockchain
-- Financial-Services
+- Financial Services
 - Market Data
 - WebSocket
 tags_raw:
@@ -70,6 +70,7 @@ tags_raw:
 - Financial Services
 - Market Data
 - WebSocket
+- Financial-Services
 apis:
 - aid: htx:htx-spot-api
   name: HTX Spot REST API
