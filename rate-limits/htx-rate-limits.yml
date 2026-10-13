@@ -1,6 +1,7 @@
 generated: '2026-07-19'
 method: searched
 source: https://huobiapi.github.io/docs/spot/v1/en/
+name: HTX API Rate Limits
 notes: >-
   HTX documents rate limits per interface, applied per IP and/or per API key.
   The figures below are the cross-cutting limits confirmed from the API reference

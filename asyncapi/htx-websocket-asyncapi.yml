@@ -1,0 +1,1435 @@
+asyncapi: 2.6.0
+id: urn:com:htx:websocket-api
+info:
+  title: Huobi / HTX WebSocket API
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 specification for Huobi (HTX) public WebSocket Market Data API
+    and WebSocket v2 Asset & Order subscription API.
+
+    ## Envelope conventions
+
+    ### Market data (v1, /ws)
+    - Subscribe:    `{ "sub": "<topic>", "id": "<client-id>" }`
+    - Unsubscribe:  `{ "unsub": "<topic>", "id": "<client-id>" }`
+    - One-shot req: `{ "req": "<topic>", "id": "<client-id>" }`
+    - Push:         `{ "ch": "<topic>", "ts": <ms>, "tick": <object|array> }`
+    - One-shot rsp: `{ "rep": "<topic>", "status": "ok", "id": "<client-id>", "data": <object|array> }`
+
+    ### Asset & Order (v2, /ws/v2)
+    - All frames use `{ "action": "sub"|"unsub"|"req"|"push"|"ping"|"pong", "ch": "<topic>", ... }`
+    - Authentication is required before subscribing to private topics via
+      `{ "action": "req", "ch": "auth", "params": { ... } }`.
+
+    ## GZIP compression
+    All inbound frames on `wss://api.huobi.pro/ws` and `wss://api.huobi.pro/feed`
+    are GZIP-compressed binary. Clients MUST gunzip the payload before parsing
+    JSON. Frames on `wss://api.huobi.pro/ws/v2` are sent as plain JSON text
+    (no GZIP compression).
+
+    ## Heartbeat
+    - Market data (v1): server sends `{ "ping": <ts> }`; client replies `{ "pong": <ts> }` echoing the same timestamp.
+    - Asset & Order (v2): server sends `{ "action": "ping", "data": { "ts": <ts> } }`;
+      client replies `{ "action": "pong", "data": { "ts": <ts> } }`.
+    Connections idle longer than the server timeout are closed.
+
+    ## Authentication (v2)
+    Authenticate with an HMAC-SHA256 signature over the canonical request string
+    using `signatureVersion: 2.1` before subscribing to any private topic.
+  termsOfService: https://www.htx.com/support/en-us/list/agreements
+  contact:
+    name: Huobi (HTX) Developer Support
+    url: https://huobiapi.github.io/docs/spot/v1/en/
+    email: support@huobigroup.com
+  license:
+    name: Proprietary
+    url: https://www.htx.com/
+
+defaultContentType: application/json
+
+servers:
+  market:
+    url: api.huobi.pro/ws
+    protocol: wss
+    description: |
+      Public market data WebSocket endpoint. GZIP-compressed binary frames.
+      Mirror: `api-aws.huobi.pro/ws`.
+  feed:
+    url: api.huobi.pro/feed
+    protocol: wss
+    description: |
+      Dedicated endpoint for Market By Price (MBP) incremental updates.
+      GZIP-compressed binary frames. Mirror: `api-aws.huobi.pro/feed`.
+  account:
+    url: api.huobi.pro/ws/v2
+    protocol: wss
+    description: |
+      WebSocket v2 endpoint for asset and order subscriptions. Plain JSON
+      frames (no GZIP). Requires authentication for all private topics.
+      Mirror: `api-aws.huobi.pro/ws/v2`.
+
+tags:
+  - name: market-data
+    description: Public market data topics on /ws and /feed.
+  - name: account
+    description: Authenticated asset, order, and clearing topics on /ws/v2.
+  - name: auth
+    description: Authentication handshake for /ws/v2.
+
+channels:
+
+  # ----------------------------------------------------------------------
+  # Market data (v1) - wss://api.huobi.pro/ws
+  # ----------------------------------------------------------------------
+
+  market.{symbol}.kline.{period}:
+    description: Candlestick (kline) updates for a symbol at the given period.
+    parameters:
+      symbol:
+        description: Trading pair, lowercase (e.g. `btcusdt`).
+        schema:
+          type: string
+          example: btcusdt
+      period:
+        description: Candle period.
+        schema:
+          type: string
+          enum: [1min, 5min, 15min, 30min, 60min, 1day, 1week, 1mon, 1year]
+    servers: [market]
+    publish:
+      operationId: subKline
+      summary: Subscribe / unsubscribe / request kline data.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+          - $ref: '#/components/messages/V1Request'
+    subscribe:
+      operationId: pushKline
+      summary: Receive kline push messages.
+      message:
+        $ref: '#/components/messages/KlinePush'
+
+  market.{symbol}.depth.{type}:
+    description: Aggregated order book depth at a price-aggregation step.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+      type:
+        description: Price aggregation step.
+        schema:
+          type: string
+          enum: [step0, step1, step2, step3, step4, step5]
+    servers: [market]
+    publish:
+      operationId: subDepth
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+          - $ref: '#/components/messages/V1Request'
+    subscribe:
+      operationId: pushDepth
+      message:
+        $ref: '#/components/messages/DepthPush'
+
+  market.{symbol}.trade.detail:
+    description: Per-trade tick stream for a symbol.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+    servers: [market]
+    publish:
+      operationId: subTradeDetail
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+          - $ref: '#/components/messages/V1Request'
+    subscribe:
+      operationId: pushTradeDetail
+      message:
+        $ref: '#/components/messages/TradeDetailPush'
+
+  market.{symbol}.detail:
+    description: 24-hour rolling market detail / statistics for a symbol.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+    servers: [market]
+    publish:
+      operationId: subDetail
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+          - $ref: '#/components/messages/V1Request'
+    subscribe:
+      operationId: pushDetail
+      message:
+        $ref: '#/components/messages/MarketDetailPush'
+
+  market.{symbol}.ticker:
+    description: Real-time ticker for a single symbol.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+    servers: [market]
+    publish:
+      operationId: subTicker
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+    subscribe:
+      operationId: pushTicker
+      message:
+        $ref: '#/components/messages/TickerPush'
+
+  market.tickers:
+    description: Real-time ticker snapshot for all trading pairs.
+    servers: [market]
+    publish:
+      operationId: subAllTickers
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+    subscribe:
+      operationId: pushAllTickers
+      message:
+        $ref: '#/components/messages/TickersPush'
+
+  market.{symbol}.bbo:
+    description: Best Bid / Best Offer updates for a symbol.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+    servers: [market]
+    publish:
+      operationId: subBbo
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+    subscribe:
+      operationId: pushBbo
+      message:
+        $ref: '#/components/messages/BboPush'
+
+  market.{symbol}.mbp.{levels}:
+    description: |
+      Market By Price (incremental) updates. Use `seqNum` / `prevSeqNum`
+      to chain updates and de-duplicate. Served on the `/feed` endpoint.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+      levels:
+        description: Number of price levels.
+        schema:
+          type: integer
+          enum: [5, 20, 150, 400]
+    servers: [feed]
+    publish:
+      operationId: subMbp
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+          - $ref: '#/components/messages/V1Request'
+    subscribe:
+      operationId: pushMbp
+      message:
+        $ref: '#/components/messages/MbpIncrementalPush'
+
+  market.{symbol}.mbp.refresh.{levels}:
+    description: Market By Price refresh updates (full snapshot at interval).
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btcusdt
+      levels:
+        schema:
+          type: integer
+          enum: [5, 20, 150, 400]
+    servers: [market]
+    publish:
+      operationId: subMbpRefresh
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+    subscribe:
+      operationId: pushMbpRefresh
+      message:
+        $ref: '#/components/messages/MbpRefreshPush'
+
+  market.{symbol}.etp:
+    description: ETP (Exchange Traded Product) net asset value updates.
+    parameters:
+      symbol:
+        schema:
+          type: string
+          example: btc3lusdt
+    servers: [market]
+    publish:
+      operationId: subEtp
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V1SubscribeRequest'
+          - $ref: '#/components/messages/V1UnsubscribeRequest'
+    subscribe:
+      operationId: pushEtp
+      message:
+        $ref: '#/components/messages/EtpPush'
+
+  ping:
+    description: |
+      Heartbeat channel for the v1 market data sockets. The server sends a
+      ping frame; the client MUST echo the same timestamp back as pong.
+    servers: [market, feed]
+    publish:
+      operationId: sendPong
+      message:
+        $ref: '#/components/messages/V1Pong'
+    subscribe:
+      operationId: receivePing
+      message:
+        $ref: '#/components/messages/V1Ping'
+
+  # ----------------------------------------------------------------------
+  # Asset & Order v2 - wss://api.huobi.pro/ws/v2
+  # ----------------------------------------------------------------------
+
+  auth:
+    description: |
+      Authentication handshake. Must be sent and confirmed before subscribing
+      to any private topic on the v2 socket.
+    servers: [account]
+    publish:
+      operationId: sendAuth
+      message:
+        $ref: '#/components/messages/V2AuthRequest'
+    subscribe:
+      operationId: receiveAuthResponse
+      message:
+        $ref: '#/components/messages/V2AuthResponse'
+
+  accounts.update#{mode}:
+    description: |
+      Account balance / available balance updates.
+      - mode 0: only balance changes are pushed.
+      - mode 1: only available balance changes are pushed.
+      - mode 2: both balance and available balance changes are pushed.
+    parameters:
+      mode:
+        description: Update mode.
+        schema:
+          type: integer
+          enum: [0, 1, 2]
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: subAccountsUpdate
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V2SubscribeRequest'
+          - $ref: '#/components/messages/V2UnsubscribeRequest'
+    subscribe:
+      operationId: pushAccountsUpdate
+      message:
+        $ref: '#/components/messages/AccountsUpdatePush'
+
+  orders#{symbol}:
+    description: |
+      Order update events for a single symbol. Use `*` as the symbol to
+      subscribe to all symbols on the account.
+    parameters:
+      symbol:
+        description: Trading pair, lowercase. Use `*` for all symbols.
+        schema:
+          type: string
+          example: btcusdt
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: subOrders
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V2SubscribeRequest'
+          - $ref: '#/components/messages/V2UnsubscribeRequest'
+    subscribe:
+      operationId: pushOrders
+      message:
+        $ref: '#/components/messages/OrdersPush'
+
+  trade.clearing#{symbol}:
+    description: |
+      Trade clearing (settlement) events for a single symbol. Use `*` as
+      the symbol to subscribe across all symbols on the account.
+    parameters:
+      symbol:
+        description: Trading pair, lowercase. Use `*` for all symbols.
+        schema:
+          type: string
+          example: btcusdt
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: subTradeClearing
+      message:
+        oneOf:
+          - $ref: '#/components/messages/V2SubscribeRequest'
+          - $ref: '#/components/messages/V2UnsubscribeRequest'
+    subscribe:
+      operationId: pushTradeClearing
+      message:
+        $ref: '#/components/messages/TradeClearingPush'
+
+  accounts.list:
+    description: One-shot request that returns the full account list / balances.
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: reqAccountsList
+      message:
+        $ref: '#/components/messages/V2Request'
+    subscribe:
+      operationId: receiveAccountsList
+      message:
+        $ref: '#/components/messages/AccountsListResponse'
+
+  orders.list:
+    description: One-shot request that returns historical orders for an account.
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: reqOrdersList
+      message:
+        $ref: '#/components/messages/V2Request'
+    subscribe:
+      operationId: receiveOrdersList
+      message:
+        $ref: '#/components/messages/OrdersListResponse'
+
+  orders.detail:
+    description: One-shot request that returns the detail of a single order.
+    servers: [account]
+    x-security:
+      - apiKey: []
+    publish:
+      operationId: reqOrdersDetail
+      message:
+        $ref: '#/components/messages/V2Request'
+    subscribe:
+      operationId: receiveOrdersDetail
+      message:
+        $ref: '#/components/messages/OrdersDetailResponse'
+
+  ping-v2:
+    description: |
+      v2 heartbeat. Server sends `{ "action": "ping", "data": { "ts": <ms> } }`;
+      client MUST echo with `{ "action": "pong", "data": { "ts": <ms> } }`.
+    servers: [account]
+    publish:
+      operationId: sendV2Pong
+      message:
+        $ref: '#/components/messages/V2Pong'
+    subscribe:
+      operationId: receiveV2Ping
+      message:
+        $ref: '#/components/messages/V2Ping'
+
+components:
+
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: user
+      description: |
+        HMAC-SHA256 signed authentication using `signatureVersion: 2.1`.
+        Submitted in-band via the `auth` channel before subscribing.
+
+  messages:
+
+    # ---------- v1 envelopes ----------
+
+    V1SubscribeRequest:
+      name: V1SubscribeRequest
+      title: Subscribe (v1)
+      summary: Subscribe to a v1 market-data topic.
+      payload:
+        type: object
+        required: [sub]
+        properties:
+          sub:
+            type: string
+            description: Topic to subscribe to.
+          id:
+            type: string
+            description: Optional client-supplied correlation id.
+        example:
+          sub: market.btcusdt.kline.1min
+          id: id1
+
+    V1UnsubscribeRequest:
+      name: V1UnsubscribeRequest
+      title: Unsubscribe (v1)
+      payload:
+        type: object
+        required: [unsub]
+        properties:
+          unsub:
+            type: string
+          id:
+            type: string
+        example:
+          unsub: market.btcusdt.kline.1min
+          id: id1
+
+    V1Request:
+      name: V1Request
+      title: One-shot Request (v1)
+      summary: Request a historical / snapshot payload for a topic.
+      payload:
+        type: object
+        required: [req]
+        properties:
+          req:
+            type: string
+            description: Topic to request.
+          id:
+            type: string
+          from:
+            type: integer
+            description: Optional start timestamp (epoch seconds), kline only.
+          to:
+            type: integer
+            description: Optional end timestamp (epoch seconds), kline only.
+        example:
+          req: market.btcusdt.kline.1min
+          id: id1
+
+    V1Ping:
+      name: V1Ping
+      title: Ping (v1)
+      payload:
+        type: object
+        required: [ping]
+        properties:
+          ping:
+            type: integer
+            format: int64
+            description: Server-supplied timestamp in milliseconds.
+        example:
+          ping: 1492420473027
+
+    V1Pong:
+      name: V1Pong
+      title: Pong (v1)
+      payload:
+        type: object
+        required: [pong]
+        properties:
+          pong:
+            type: integer
+            format: int64
+            description: Echo the timestamp received in the ping.
+        example:
+          pong: 1492420473027
+
+    # ---------- v1 pushes ----------
+
+    KlinePush:
+      name: KlinePush
+      title: Kline Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                description: Candle start time, epoch seconds.
+              open:
+                type: number
+              close:
+                type: number
+              low:
+                type: number
+              high:
+                type: number
+              amount:
+                type: number
+                description: Volume in base currency.
+              vol:
+                type: number
+                description: Volume in quote currency.
+              count:
+                type: integer
+                description: Number of trades in the candle.
+        example:
+          ch: market.btcusdt.kline.1min
+          ts: 1489474082831
+          tick:
+            id: 1489464480
+            amount: 0.0
+            count: 0
+            open: 7962.62
+            close: 7962.62
+            low: 7962.62
+            high: 7962.62
+            vol: 0.0
+
+    DepthPush:
+      name: DepthPush
+      title: Aggregated Depth Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              bids:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+                description: Array of `[price, amount]` pairs sorted descending.
+              asks:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+                description: Array of `[price, amount]` pairs sorted ascending.
+              ts:
+                type: integer
+                format: int64
+              version:
+                type: integer
+                format: int64
+
+    TradeDetailPush:
+      name: TradeDetailPush
+      title: Trade Detail Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              ts:
+                type: integer
+                format: int64
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    ts:
+                      type: integer
+                      format: int64
+                    tradeId:
+                      type: integer
+                      format: int64
+                    amount:
+                      type: number
+                    price:
+                      type: number
+                    direction:
+                      type: string
+                      enum: [buy, sell]
+
+    MarketDetailPush:
+      name: MarketDetailPush
+      title: Market Detail (24h) Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              low:
+                type: number
+              high:
+                type: number
+              open:
+                type: number
+              close:
+                type: number
+              vol:
+                type: number
+              amount:
+                type: number
+              version:
+                type: integer
+                format: int64
+              count:
+                type: integer
+
+    TickerPush:
+      name: TickerPush
+      title: Ticker Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            $ref: '#/components/schemas/TickerEntry'
+
+    TickersPush:
+      name: TickersPush
+      title: All Tickers Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: array
+            items:
+              $ref: '#/components/schemas/TickerEntry'
+
+    BboPush:
+      name: BboPush
+      title: BBO Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              symbol:
+                type: string
+              quoteTime:
+                type: integer
+                format: int64
+              bid:
+                type: number
+              bidSize:
+                type: number
+              ask:
+                type: number
+              askSize:
+                type: number
+              seqId:
+                type: integer
+                format: int64
+
+    MbpIncrementalPush:
+      name: MbpIncrementalPush
+      title: MBP Incremental Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              seqNum:
+                type: integer
+                format: int64
+              prevSeqNum:
+                type: integer
+                format: int64
+              bids:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+              asks:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+
+    MbpRefreshPush:
+      name: MbpRefreshPush
+      title: MBP Refresh Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              seqNum:
+                type: integer
+                format: int64
+              bids:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+              asks:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 2
+                  maxItems: 2
+
+    EtpPush:
+      name: EtpPush
+      title: ETP Net Asset Value Push
+      payload:
+        type: object
+        properties:
+          ch:
+            type: string
+          ts:
+            type: integer
+            format: int64
+          tick:
+            type: object
+            properties:
+              symbol:
+                type: string
+              nav:
+                type: number
+              navTime:
+                type: integer
+                format: int64
+              outstanding:
+                type: number
+
+    # ---------- v2 envelopes ----------
+
+    V2AuthRequest:
+      name: V2AuthRequest
+      title: Auth Request (v2)
+      payload:
+        type: object
+        required: [action, ch, params]
+        properties:
+          action:
+            type: string
+            const: req
+          ch:
+            type: string
+            const: auth
+          params:
+            type: object
+            required:
+              - authType
+              - accessKey
+              - signatureMethod
+              - signatureVersion
+              - timestamp
+              - signature
+            properties:
+              authType:
+                type: string
+                enum: [api]
+              accessKey:
+                type: string
+              signatureMethod:
+                type: string
+                enum: [HmacSHA256]
+              signatureVersion:
+                type: string
+                enum: ['2.1']
+              timestamp:
+                type: string
+                description: UTC time formatted as `YYYY-MM-DDTHH:mm:ss`.
+              signature:
+                type: string
+                description: Base64-encoded HMAC-SHA256 signature.
+        example:
+          action: req
+          ch: auth
+          params:
+            authType: api
+            accessKey: xxx-xxx-xxx-xxx
+            signatureMethod: HmacSHA256
+            signatureVersion: '2.1'
+            timestamp: '2020-01-31T10:25:43'
+            signature: xxxxxxxxxxxxxxxx
+
+    V2AuthResponse:
+      name: V2AuthResponse
+      title: Auth Response (v2)
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: req
+          ch:
+            type: string
+            const: auth
+          code:
+            type: integer
+          message:
+            type: string
+          data:
+            type: object
+        example:
+          action: req
+          code: 200
+          ch: auth
+          data: {}
+
+    V2SubscribeRequest:
+      name: V2SubscribeRequest
+      title: Subscribe (v2)
+      payload:
+        type: object
+        required: [action, ch]
+        properties:
+          action:
+            type: string
+            const: sub
+          ch:
+            type: string
+          cid:
+            type: string
+            description: Optional client correlation id.
+        example:
+          action: sub
+          ch: orders#btcusdt
+
+    V2UnsubscribeRequest:
+      name: V2UnsubscribeRequest
+      title: Unsubscribe (v2)
+      payload:
+        type: object
+        required: [action, ch]
+        properties:
+          action:
+            type: string
+            const: unsub
+          ch:
+            type: string
+          cid:
+            type: string
+
+    V2Request:
+      name: V2Request
+      title: One-shot Request (v2)
+      payload:
+        type: object
+        required: [action, ch]
+        properties:
+          action:
+            type: string
+            const: req
+          ch:
+            type: string
+          params:
+            type: object
+          cid:
+            type: string
+
+    V2Ping:
+      name: V2Ping
+      title: Ping (v2)
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: ping
+          data:
+            type: object
+            properties:
+              ts:
+                type: integer
+                format: int64
+        example:
+          action: ping
+          data:
+            ts: 1575537778295
+
+    V2Pong:
+      name: V2Pong
+      title: Pong (v2)
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: pong
+          data:
+            type: object
+            properties:
+              ts:
+                type: integer
+                format: int64
+        example:
+          action: pong
+          data:
+            ts: 1575537778295
+
+    # ---------- v2 pushes ----------
+
+    AccountsUpdatePush:
+      name: AccountsUpdatePush
+      title: Account Update Push
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: push
+          ch:
+            type: string
+          data:
+            type: object
+            properties:
+              currency:
+                type: string
+              accountId:
+                type: integer
+                format: int64
+              balance:
+                type: string
+                description: Total balance (only present in modes 0 and 2).
+              available:
+                type: string
+                description: Available balance (only present in modes 1 and 2).
+              changeType:
+                type: string
+                description: |
+                  Source of balance change: `order.place`, `order.match`,
+                  `order.refund`, `order.cancel`, `order.fee-refund`,
+                  `margin.transfer`, `margin.loan`, `margin.interest`,
+                  `margin.repay`, `other`.
+              accountType:
+                type: string
+                enum: [trade, frozen, loan, interest]
+              changeTime:
+                type: integer
+                format: int64
+              seqNum:
+                type: integer
+                format: int64
+        example:
+          action: push
+          ch: accounts.update#2
+          data:
+            currency: usdt
+            accountId: 123456
+            balance: '23.111'
+            available: '20.222'
+            changeType: order.match
+            accountType: trade
+            seqNum: 86872993928
+            changeTime: 1568601800000
+
+    OrdersPush:
+      name: OrdersPush
+      title: Order Update Push
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: push
+          ch:
+            type: string
+          data:
+            type: object
+            properties:
+              eventType:
+                type: string
+                enum: [creation, trigger, deletion, cancellation, trade]
+              symbol:
+                type: string
+              accountId:
+                type: integer
+                format: int64
+              orderId:
+                type: integer
+                format: int64
+              clientOrderId:
+                type: string
+              orderSide:
+                type: string
+                enum: [buy, sell]
+              orderPrice:
+                type: string
+              orderSize:
+                type: string
+              orderValue:
+                type: string
+              type:
+                type: string
+                description: |
+                  Order type, e.g. `buy-market`, `sell-market`, `buy-limit`,
+                  `sell-limit`, `buy-ioc`, `sell-ioc`, `buy-limit-maker`,
+                  `sell-limit-maker`, `buy-stop-limit`, `sell-stop-limit`,
+                  `buy-limit-fok`, `sell-limit-fok`, `buy-stop-limit-fok`,
+                  `sell-stop-limit-fok`.
+              orderSource:
+                type: string
+              orderStatus:
+                type: string
+                enum: [submitted, partial-filled, filled, canceled, partial-canceled, rejected, created]
+              errCode:
+                type: integer
+              errMessage:
+                type: string
+              lastActTime:
+                type: integer
+                format: int64
+              tradePrice:
+                type: string
+              tradeVolume:
+                type: string
+              aggressor:
+                type: boolean
+              tradeId:
+                type: integer
+                format: int64
+              tradeTime:
+                type: integer
+                format: int64
+              remainAmt:
+                type: string
+              execAmt:
+                type: string
+              stopPrice:
+                type: string
+              operator:
+                type: string
+        example:
+          action: push
+          ch: orders#btcusdt
+          data:
+            orderSide: buy
+            lastActTime: 1583853365586
+            clientOrderId: abc123
+            orderStatus: rejected
+            errCode: 2002
+            errMessage: invalid.client.order.id (NT)
+            symbol: btcusdt
+            eventType: creation
+            accountId: 992701
+            orderPrice: '38'
+            orderSize: '111.11'
+            type: buy-limit
+            orderId: 0
+            orderSource: spot-api
+            orderValue: '4222.18'
+
+    TradeClearingPush:
+      name: TradeClearingPush
+      title: Trade Clearing Push
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: push
+          ch:
+            type: string
+          data:
+            type: object
+            properties:
+              symbol:
+                type: string
+              orderId:
+                type: integer
+                format: int64
+              tradePrice:
+                type: string
+              tradeVolume:
+                type: string
+              orderSide:
+                type: string
+                enum: [buy, sell]
+              orderType:
+                type: string
+              aggressor:
+                type: boolean
+              tradeId:
+                type: integer
+                format: int64
+              tradeTime:
+                type: integer
+                format: int64
+              transactFee:
+                type: string
+              feeCurrency:
+                type: string
+              feeDeduct:
+                type: string
+                description: Amount of fee deduction.
+              feeDeductType:
+                type: string
+                description: One of `ht` or `point`.
+              accountId:
+                type: integer
+                format: int64
+              source:
+                type: string
+              orderPrice:
+                type: string
+              orderSize:
+                type: string
+              orderValue:
+                type: string
+              clientOrderId:
+                type: string
+              stopPrice:
+                type: string
+              operator:
+                type: string
+              orderCreateTime:
+                type: integer
+                format: int64
+              orderStatus:
+                type: string
+        example:
+          action: push
+          ch: trade.clearing#btcusdt
+          data:
+            eventType: trade
+            symbol: btcusdt
+            orderId: 99998888
+            tradePrice: '9999.99'
+            tradeVolume: '0.96'
+            orderSide: buy
+            aggressor: true
+            tradeId: 919219323232
+            tradeTime: 998787897878
+            transactFee: '19.88'
+            feeDeduct: '0'
+            feeDeductType: ''
+            feeCurrency: btc
+            accountId: 9912791
+            source: spot-api
+            orderPrice: '10000'
+            orderSize: '1'
+            clientOrderId: a001
+            orderCreateTime: 998787897878
+            orderStatus: partial-filled
+
+    AccountsListResponse:
+      name: AccountsListResponse
+      title: Accounts List Response
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: req
+          code:
+            type: integer
+          ch:
+            type: string
+            const: accounts.list
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                accountId:
+                  type: integer
+                  format: int64
+                accountType:
+                  type: string
+                currency:
+                  type: string
+                balance:
+                  type: string
+                available:
+                  type: string
+                changeTime:
+                  type: integer
+                  format: int64
+                seqNum:
+                  type: integer
+                  format: int64
+
+    OrdersListResponse:
+      name: OrdersListResponse
+      title: Orders List Response
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: req
+          code:
+            type: integer
+          ch:
+            type: string
+            const: orders.list
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrderDetail'
+
+    OrdersDetailResponse:
+      name: OrdersDetailResponse
+      title: Order Detail Response
+      payload:
+        type: object
+        properties:
+          action:
+            type: string
+            const: req
+          code:
+            type: integer
+          ch:
+            type: string
+            const: orders.detail
+          data:
+            $ref: '#/components/schemas/OrderDetail'
+
+  schemas:
+
+    TickerEntry:
+      type: object
+      properties:
+        symbol:
+          type: string
+        open:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        close:
+          type: number
+        amount:
+          type: number
+        vol:
+          type: number
+        count:
+          type: integer
+        bid:
+          type: number
+        bidSize:
+          type: number
+        ask:
+          type: number
+        askSize:
+          type: number
+        lastPrice:
+          type: number
+        lastSize:
+          type: number
+
+    OrderDetail:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        clientOrderId:
+          type: string
+        symbol:
+          type: string
+        accountId:
+          type: integer
+          format: int64
+        orderAmount:
+          type: string
+        orderPrice:
+          type: string
+        type:
+          type: string
+        orderSource:
+          type: string
+        orderState:
+          type: string
+        filledAmount:
+          type: string
+        filledCashAmount:
+          type: string
+        filledFees:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
