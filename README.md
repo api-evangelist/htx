@@ -64,6 +64,132 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-HTX is a company surfaced as a portfolio company of hongshan and added to the API Evangelist network as a stub for enrichment. Sector: technology. This profile is a lead awaiting the enrichment pipeline.
+HTX (formerly Huobi Global) is a cryptocurrency exchange founded in 2013 that offers spot trading, futures and derivatives, margin trading, trading bots, copy trading, and earn/staking products across BTC, ETH, XRP and 600+ digital assets. HTX exposes a public developer platform (HTX Open Platform) with a REST API and a WebSocket streaming API covering market data, account and wallet management, sub-user administration, spot and conditional order placement, and cross/isolated margin lending. Requests are authenticated with an AccessKey and an HMAC-SHA256 (Signature Version 2) request signature. Official client SDKs are published under the HuobiRDCenter GitHub organization for Java, Python, Go, C++ and C#, with separate contract/futures variants. HTX was surfaced as a portfolio company of Hongshan (formerly Sequoia Capital China).
 
-Backed by: hongshan — https://htx.com
+**Areas:** Company · Technology · Cryptocurrency · Cryptocurrency Exchange · Trading · Digital Assets · Blockchain · Financial Services · Market Data · WebSocket
+
+## HTX on APIs.io
+
+Everything profiled for HTX is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/htx/](https://apis.io/providers/htx/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [HTX Spot REST API](https://apis.io/apis/htx/htx-spot-api/) — The HTX Spot REST API provides HTTP access to reference data (system status, symbols, currencies, chains), market data (klines, tickers, depth, trades, 24h…
+- [HTX WebSocket API](https://apis.io/apis/htx/htx-websocket-api/) — The HTX WebSocket API provides a two-way real-time channel for subscribing to market data (klines, market depth, trade detail, best bid/offer) and to…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Huobi / HTX WebSocket API](https://apis.io/asyncapis/htx/htx-websocket-asyncapi/)
+
+#### Event channels (19)
+
+Individual events and webhooks the provider emits.
+
+- [accounts.list](https://apis.io/channels/htx/accounts-list/)
+- [accounts.update#{mode}](https://apis.io/channels/htx/accounts-update-mode/)
+- [auth](https://apis.io/channels/htx/auth/)
+- [market.{symbol}.bbo](https://apis.io/channels/htx/market-symbol-bbo/)
+- [market.{symbol}.depth.{type}](https://apis.io/channels/htx/market-symbol-depth-type/)
+- [market.{symbol}.detail](https://apis.io/channels/htx/market-symbol-detail/)
+- [market.{symbol}.etp](https://apis.io/channels/htx/market-symbol-etp/)
+- [market.{symbol}.kline.{period}](https://apis.io/channels/htx/market-symbol-kline-period/)
+- [market.{symbol}.mbp.{levels}](https://apis.io/channels/htx/market-symbol-mbp-levels/)
+- [market.{symbol}.mbp.refresh.{levels}](https://apis.io/channels/htx/market-symbol-mbp-refresh-levels/)
+- [market.{symbol}.ticker](https://apis.io/channels/htx/market-symbol-ticker/)
+- [market.{symbol}.trade.detail](https://apis.io/channels/htx/market-symbol-trade-detail/)
+- [market.tickers](https://apis.io/channels/htx/market-tickers/)
+- [orders.detail](https://apis.io/channels/htx/orders-detail/)
+- [orders.list](https://apis.io/channels/htx/orders-list/)
+- [orders#{symbol}](https://apis.io/channels/htx/orders-symbol/)
+- [ping](https://apis.io/channels/htx/ping/)
+- [ping-v2](https://apis.io/channels/htx/ping-v2/)
+- [trade.clearing#{symbol}](https://apis.io/channels/htx/trade-clearing-symbol/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Htx Authentication](https://apis.io/security/htx/htx-authentication/)
+- [Htx Domain Security](https://apis.io/security/htx/htx-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Htx Rate Limits](https://apis.io/rate-limits/htx/htx-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://htx.com)
+- [Documentation](https://www.htx.com/en-us/opend/newApiPages/)
+- [Getting started](https://www.htx.com/support/360000203002)
+- [API reference](https://huobiapi.github.io/docs/spot/v1/en/)
+- [Sign up](https://www.htx.com/en-us/register/)
+- [Support](https://www.htx.com/support/)
+- [Blog](https://www.htx.com/news/)
+- [Terms of service](https://www.htx.com/support/360000298561/)
+- [Privacy policy](https://www.htx.com/en-us/about/privacy/)
+- [GitHub](https://github.com/HuobiRDCenter)
+
+## API Evangelist rating
+
+**Kin Score 44.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 43.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 34.2 |
+
+**Agent readiness 21.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 23.1** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/htx/](https://apis.io/providers/htx/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for HTX: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/htx/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
